@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Windows;
 using Newtonsoft.Json;
 using Skillbox.App.Model;
 
@@ -12,20 +14,37 @@ namespace Skillbox8.ViewModel
 
         public MainViewModel()
         {
-            var dep2 = new Department { Name = "Actual reports for inner usage", Created = DateTime.Now };
-            var dep1 = new Department { Name = "Tax Avoidance", Created = DateTime.Now };
-            var dep3 = new Department { Name = "FinDep", Created = DateTime.Now };
-            dep3.Departments.Add(dep1);
-            dep3.Departments.Add(dep2);
-            var ivan = new Employee { Age = 24, FirstName = "Ivan", LastName = "Snow", Id = 0, Salary = 1, Department = dep1 };
-            var petr = new Employee { Age = 54, FirstName = "Petr", LastName = "Snow", Id = 1, Salary = 1, Department = dep2 };
-            Organization = new Organization
-            {
-                Departments = new List<Department> { dep3 },
-                Employees = new List<Employee> { ivan, petr }
-            };
-            Save();
+            //var dep2 = new Department { Name = "Actual reports for inner usage", Created = DateTime.Now };
+            //var dep1 = new Department { Name = "Tax Avoidance", Created = DateTime.Now };
+            //var dep3 = new Department { Name = "FinDep", Created = DateTime.Now };
+            //dep3.Departments.Add(dep1);
+            //dep3.Departments.Add(dep2);
+            //var ivan = new Employee { Age = 24, FirstName = "Ivan", LastName = "Snow", Id = 0, Salary = 1, Department = dep1 };
+            //var petr = new Employee { Age = 54, FirstName = "Petr", LastName = "Snow", Id = 1, Salary = 1, Department = dep2 };
+            //Organization = new Organization
+            //{
+            //    Departments = new List<Department> { dep3 },
+            //    Employees = new List<Employee> { ivan, petr }
+            //};
+            //Save();
             Load();
+            RequestClose = PromptOnClose;
+        }
+
+        private void PromptOnClose(object sender, CancelEventArgs e)
+        {
+            var res = MessageBox.Show("Save?", "", MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
+            switch (res)
+            {
+                case MessageBoxResult.Yes:
+                    Save();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                default:
+                    e.Cancel = true;
+                    break;
+            }
         }
 
         private void Save()
@@ -47,7 +66,7 @@ namespace Skillbox8.ViewModel
             }
         }
 
-        public Action RequestClose { get; internal set; }
+        public CancelEventHandler RequestClose { get; internal set; }
         public Organization Organization { get; set; }
     }
 }

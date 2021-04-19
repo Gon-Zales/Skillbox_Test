@@ -9,7 +9,8 @@
         public int Age { get; set; }
         public Department Department
         {
-            get => department; set
+            get => department;
+            set
             {
                 if (department == value) return;
                 department?.Employees.Remove(this);

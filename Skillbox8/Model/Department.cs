@@ -29,6 +29,7 @@ namespace Skillbox.App.Model
             if (e.OldItems != null)
                 foreach (Employee retiree in e.OldItems)
                     retiree.Department = null;
+            //TODO notify count changed
         }
     }
 }
