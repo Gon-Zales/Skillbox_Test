@@ -10,7 +10,8 @@
             <TreeViewItem Header="{Binding Name}">
                 <StackPanel>
                     <TextBox Text="{Binding Name}"/>
-                    <TextBlock Text="{Binding EmployeesCount}"/>
+                    <TextBlock Text="{Binding Id}"/>
+                    <TextBlock Text="{Binding Employees.Count}"/>
                     <TextBlock Text="{Binding Created}"/>
                 </StackPanel>
             </TreeViewItem>
@@ -32,8 +33,9 @@
                             <TextBox Text="{Binding FirstName}"/>
                             <TextBox Text="{Binding LastName}"/>
                         </WrapPanel>
-                        <TextBox Text="{Binding Age}"/>
                         <TextBlock Text="{Binding Id}"/>
+                        <TextBox Text="{Binding DepartmentId}"/>
+                        <TextBox Text="{Binding Age}"/>
                         <TextBox Text="{Binding Salary}"/>
                     </StackPanel>
                 </DataTemplate>
