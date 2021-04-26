@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -7,156 +8,185 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
+using File = System.IO.File;
 using TG_File = Telegram.Bot.Types.File;
 
 namespace SkillBot
 {
     class Program
     {
-        static readonly ITelegramBotClient botClient = new TelegramBotClient("1621303696:AAFZjrHdPUvnGvyX799F5l322azUxPdDFxA");
+        #region Commands list
+        const string start = "/start";
+        const string help = "/help";
+        const string get = "/get";
+        const string save = "/save";
+        const string list = "/list";
+        #endregion
+
+        static ITelegramBotClient botClient;
         static readonly ICollection<Message> files = new List<Message>();
+        const string filesDir = "files/";
+        const string tokenPath = "token.txt";
+
         static void Main()
         {
-            var me = botClient.GetMeAsync().Result;
-            Console.WriteLine($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
+            var token = File.ReadAllText(tokenPath);
+            botClient = new TelegramBotClient(token);
+
+            botClient.GetMeAsync().Wait();
+
+            Directory.CreateDirectory(filesDir);
 
             botClient.OnMessage += Bot_OnMessage;
             botClient.StartReceiving();
 
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
-
             botClient.StopReceiving();
+
         }
 
         static async void Bot_OnMessage(object sender, MessageEventArgs e)
         {
-            Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
             FileBase file = null;
             string reply;
-            switch (e.Message.Type)
-            {
-                case MessageType.Video:
-                    file = e.Message.Video;
-                    reply = "Thx for the vids";
-                    break;
-                case MessageType.VideoNote:
-                    file = e.Message.VideoNote;
-                    reply = "Thx for the vid";
-                    break;
-                case MessageType.Photo:
-                    file = e.Message.Photo.LastOrDefault();
-                    reply = "Thx for the pics";
-                    break;
-                case MessageType.Audio:
-                    file = e.Message.Audio;
-                    reply = "Thx for the audio";
-                    break;
-                case MessageType.Voice:
-                    file = e.Message.Voice;
-                    reply = "Thx for the voice";
-                    break;
-                case MessageType.Document:
-                    file = e.Message.Document;
-                    reply = "Thx for the docs";
-                    break;
-                case MessageType.Poll:
-                    reply = "I'm not yet given the right to vote. Your society is cruel and xenophobic.";
-                    break;
-                case MessageType.Dice:
-                    reply = "You won!";
-                    break;
-                case MessageType.Text:
-                    ReplyToText(e.Message, out reply);
-                    break;
-                default:
-                    reply = "whuzzat?";
-                    break;
-            }
+            if (e.Message.Type is MessageType.Text)
+                reply = HandleText(e.Message);
+            else
+                reply = HandleMedia(e.Message, ref file);
 
-            await botClient.SendTextMessageAsync(
-              chatId: e.Message.Chat,
-              text: reply
-            );
-            if (file == null)
-                return;
+            await botClient.SendTextMessageAsync(e.Message.Chat, reply, replyToMessageId:e.Message.MessageId);
 
-            file = await botClient.GetFileAsync(file.FileId);
-            var n_file = (TG_File)file;
-            var docname = n_file.FilePath;
-            if (!string.IsNullOrWhiteSpace(e.Message.Caption))
-                docname = e.Message.Caption + "." + n_file.FilePath.Split('.').Last();
-            files.Add(new Message { caption = docname, File_id = file.FileId, Type = e.Message.Type });
+            if (file != null)
+                await CacheFile(e, file);
         }
 
-        private static void ReplyToText(Telegram.Bot.Types.Message message, out string reply)
+        private static async Task CacheFile(MessageEventArgs e, FileBase file)
+        {
+            Console.WriteLine("CacheFile");
+            TG_File tg_file = await botClient.GetFileAsync(file.FileId);
+            files.Add(new Message
+            {
+                Caption = e.Message.Caption,
+                FileId = tg_file.FileId,
+                Type = e.Message.Type,
+                FilePath = tg_file.FilePath.Split('/').LastOrDefault()
+            });
+        }
+
+        private static string HandleMedia(Telegram.Bot.Types.Message message, ref FileBase file)
+        {
+            Console.WriteLine("HandleMedia");
+            switch (message.Type)
+            {
+                case MessageType.Video:
+                    file = message.Video;
+                    return "Thx for the vids";
+                case MessageType.VideoNote:
+                    file = message.VideoNote;
+                    return "Thx for the vid";
+                case MessageType.Photo:
+                    file = message.Photo.LastOrDefault();
+                    return "Thx for the pics";
+                case MessageType.Audio:
+                    file = message.Audio;
+                    return "Thx for the audio";
+                case MessageType.Voice:
+                    file = message.Voice;
+                    return "Thx for the voice";
+                case MessageType.Document:
+                    file = message.Document;
+                    return "Thx for the docs";
+                case MessageType.Poll:
+                    return "I'm not yet given the right to vote. Your society is cruel and xenophobic.";
+                case MessageType.Dice:
+                    return "You won!";
+                default:
+                    return "whuzzat?";
+            }
+        }
+
+        private static string HandleText(Telegram.Bot.Types.Message message)
         {
             var command = message.Text.Split(' ').First();
-            const string get_id = "/get_id";
             switch (command)
             {
-                case "/start":
-                    reply = "So, the tale begins";
-                    return;
-                case "/help":
-                    reply = @"/list просмотреть список загруженных файлов./n/get_id Позволяет скачать файл по номеру.";
-                    break;
-                case "/list":
-                    reply = "Your files are:\n";
+                case start:
+                    return "So, the tale begins";
+                case help:
+                    return $"{list} просмотреть список загруженных файлов./n{get} Позволяет скачать файл по номеру.";
+                case list:
+                    var reply = "Your files are:\n";
                     foreach (var f in files)
-                        reply += f.caption + "\n";
-                    break;
-                case get_id:
-                    reply = "Here is your order, have a nice day!";
-                    var id = message.Text.Substring(get_id.Length + 1);
-                    Message selected_file;
+                        reply += (f.Caption ?? f.FilePath) + "\n";
+                    return reply;
+                case save:
+                case get:
+                    var id = message.Text.Substring(command.Length + 1).Trim();
+                    Message selectedFile;
                     try
                     {
-                        selected_file = files.Single(f => f.caption == id);
+                        selectedFile = files.Single(f => f.Caption == id || f.FilePath == id);
                     }
                     catch (InvalidOperationException)
                     {
-                        reply = "No matching id is found";
-                        break;
+                        return "No matching id is found";
                     }
-                    SendFileAsync(message.Chat, selected_file);
-                    break;
+                    if (command == save)
+                    {
+                        SaveFileAsync(selectedFile);
+                        return "I'll save it, don't you worry.";
+                    }
+                    else
+                    {
+                        SendFileAsync(message.Chat, selectedFile);
+                        return "Here is your order, have a nice day!";
+                    }
                 default:
-                    reply = $"What did you mean by \"{message.Text}\"";
-                    break;
+                    return $"What did you mean by \"{message.Text}\"";
             }
         }
+
+        private static async void SaveFileAsync(Message selectedFile)
+        {
+            var file = await botClient.GetFileAsync(selectedFile.FileId);
+
+            var filename = filesDir + selectedFile.FilePath;
+            using (var fileStream = File.Open(filename, FileMode.Create))
+                await botClient.DownloadFileAsync(file.FilePath, fileStream);
+        }
+
         static async void SendFileAsync(Chat chat, Message message)
         {
             switch (message.Type)
             {
                 case MessageType.Video:
-                    await botClient.SendVideoAsync(chat, new InputOnlineFile(message.File_id));
+                    await botClient.SendVideoAsync(chat, new InputOnlineFile(message.FileId));
                     break;
                 case MessageType.VideoNote:
-                    await botClient.SendVideoNoteAsync(chat, new InputOnlineFile(message.File_id));
+                    await botClient.SendVideoNoteAsync(chat, new InputOnlineFile(message.FileId));
                     break;
                 case MessageType.Photo:
-                    await botClient.SendPhotoAsync(chat, new InputOnlineFile(message.File_id));
+                    await botClient.SendPhotoAsync(chat, new InputOnlineFile(message.FileId));
                     break;
                 case MessageType.Audio:
-                    await botClient.SendAudioAsync(chat, new InputOnlineFile(message.File_id));
+                    await botClient.SendAudioAsync(chat, new InputOnlineFile(message.FileId));
                     break;
                 case MessageType.Voice:
-                    await botClient.SendVoiceAsync(chat, new InputOnlineFile(message.File_id));
+                    await botClient.SendVoiceAsync(chat, new InputOnlineFile(message.FileId));
                     break;
                 case MessageType.Document:
-                    await botClient.SendDocumentAsync(chat, new InputOnlineFile(message.File_id));
+                    await botClient.SendDocumentAsync(chat, new InputOnlineFile(message.FileId));
                     break;
                 default:
                     throw new NotImplementedException();
             }
-
         }
         public struct Message
         {
-            public string File_id;
-            public string caption;
+            public string FileId;
+            public string FilePath;
+            public string Caption;
             public MessageType Type;
         }
     }
