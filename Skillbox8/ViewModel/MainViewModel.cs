@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
+﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using Newtonsoft.Json;
 using Skillbox.App.Model;
 
@@ -11,6 +9,11 @@ namespace Skillbox8.ViewModel
     class MainViewModel
     {
         private readonly string fileName = @".\organization.json";
+
+        public CancelEventHandler RequestClose { get; internal set; }
+        public Organization Organization { get; set; }
+        public ICommand NewDepartmentCommand { get; set; }
+        public ICommand NewEmployeeCommand { get; set; }
 
         public MainViewModel()
         {
@@ -27,6 +30,8 @@ namespace Skillbox8.ViewModel
             //    Employees = new List<Employee> { ivan, petr }
             //};
             //Save();
+            NewDepartmentCommand = new RelayCommand();
+            NewEmployeeCommand = new RelayCommand();
             Load();
             RequestClose = PromptOnClose;
         }
@@ -65,8 +70,5 @@ namespace Skillbox8.ViewModel
                 Organization = JsonConvert.DeserializeObject<Organization>(json);
             }
         }
-
-        public CancelEventHandler RequestClose { get; internal set; }
-        public Organization Organization { get; set; }
     }
 }

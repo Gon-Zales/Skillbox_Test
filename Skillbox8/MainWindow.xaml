@@ -22,6 +22,10 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <TreeView ItemsSource="{Binding Organization.Departments}"
                   ItemTemplate="{StaticResource ResourceKey=DepartmentTemplate}"/>
         <ListBox ItemsSource="{Binding Organization.Employees}"
@@ -41,5 +45,14 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button
+            Grid.Row="1"
+            Content="New Department" 
+            Command="{Binding NewDepartmentCommand}"/>
+        <Button 
+            Grid.Row="1"
+            Grid.Column="1"
+            Content="New Employee" 
+            Command="{Binding NewEmployeeCommand}"/>
     </Grid>
 </Window>
