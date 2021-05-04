@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using Skillbox.App.Model;
+using Skillbox.App.Tools;
 
 namespace Skillbox8.ViewModel
 {
@@ -30,9 +32,11 @@ namespace Skillbox8.ViewModel
             //    Employees = new List<Employee> { ivan, petr }
             //};
             //Save();
-            NewDepartmentCommand = new RelayCommand();
-            NewEmployeeCommand = new RelayCommand();
+
             Load();
+            NewDepartmentCommand = new RelayCommand(x => true, x => Organization.Departments.Add(new Department()));
+            NewEmployeeCommand = new RelayCommand(x => true, x => Organization.Employees.Add(new Employee()));
+
             RequestClose = PromptOnClose;
         }
 

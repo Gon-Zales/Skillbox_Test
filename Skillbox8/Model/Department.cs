@@ -3,7 +3,6 @@ using Skillbox.App.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -16,7 +15,7 @@ namespace Skillbox.App.Model
 
         public int Id { get; internal set; } = AllDepartments.Count;
         public string Name { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
         [IgnoreDataMember]
         public ISet<Employee> Employees { get => employees; }
         public ISet<int> EmployeeIDs => new HashSet<int>(employees.Select(x => x.Id));

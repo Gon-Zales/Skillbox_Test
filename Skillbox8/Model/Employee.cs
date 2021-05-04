@@ -16,7 +16,7 @@ namespace Skillbox.App.Model
         public decimal Salary { get; set; }
         public int DepartmentId
         {
-            get => department.Id;
+            get => department?.Id??0;
             set
             {
                 Debug.WriteLine($"Employee {Id}.DepartmentId is assigned {value}");

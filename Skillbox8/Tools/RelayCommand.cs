@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Skillbox8.Tools
+namespace Skillbox.App.Tools
 {
     public class RelayCommand : ICommand
     {

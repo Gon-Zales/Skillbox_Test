@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Skillbox.App.Model
 {
     public class Organization
     {
-        public IEnumerable<Department> Departments { get; set; }
-        public IEnumerable<Employee> Employees { get; set; }
+        public ObservableHashSet<Department> Departments { get; set; }
+        public ObservableHashSet<Employee> Employees { get; set; }
     }
 }

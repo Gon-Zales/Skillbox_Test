@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skillbox8", "Skillbox8\Skillbox8.csproj", "{2A8EB234-D2E0-4119-BF59-DA53149C398D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "Skillbox8\App.csproj", "{2A8EB234-D2E0-4119-BF59-DA53149C398D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bot", "Bot\Bot.csproj", "{8180ADF8-E085-422C-AE13-1B558D748793}"
 EndProject
