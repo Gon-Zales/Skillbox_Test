@@ -10,13 +10,12 @@ namespace Skillbox.App.Model
         private Department department;
 
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
         public int Age { get; set; }
         public decimal Salary { get; set; }
         public int DepartmentId
         {
-            get => department?.Id??0;
+            get => department?.Id ?? 0;
             set
             {
                 Debug.WriteLine($"Employee {Id}.DepartmentId is assigned {value}");

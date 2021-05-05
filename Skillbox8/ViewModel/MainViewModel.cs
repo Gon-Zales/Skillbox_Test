@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
 using Skillbox.App.Model;
 using Skillbox.App.Tools;
@@ -19,19 +21,19 @@ namespace Skillbox8.ViewModel
 
         public MainViewModel()
         {
-            //var dep2 = new Department { Name = "Actual reports for inner usage", Created = DateTime.Now };
-            //var dep1 = new Department { Name = "Tax Avoidance", Created = DateTime.Now };
-            //var dep3 = new Department { Name = "FinDep", Created = DateTime.Now };
-            //dep3.Departments.Add(dep1);
-            //dep3.Departments.Add(dep2);
-            //var ivan = new Employee { Age = 24, FirstName = "Ivan", LastName = "Snow", Id = 0, Salary = 1, Department = dep1 };
-            //var petr = new Employee { Age = 54, FirstName = "Petr", LastName = "Snow", Id = 1, Salary = 1, Department = dep2 };
-            //Organization = new Organization
-            //{
-            //    Departments = new List<Department> { dep3 },
-            //    Employees = new List<Employee> { ivan, petr }
-            //};
-            //Save();
+            var dep2 = new Department { Name = "Actual reports for inner usage", Created = DateTime.Now };
+            var dep1 = new Department { Name = "Tax Avoidance", Created = DateTime.Now };
+            var dep3 = new Department { Name = "FinDep", Created = DateTime.Now };
+            dep3.Departments.Add(dep1);
+            dep3.Departments.Add(dep2);
+            var ivan = new Employee { Age = 24, Name = "Ivan Snow", Id = 0, Salary = 1, Department = dep1 };
+            var petr = new Employee { Age = 54, Name = "Petr Snow", Id = 1, Salary = 1, Department = dep2 };
+            Organization = new Organization
+            {
+                Departments = new ObservableHashSet<Department> { dep3 },
+                Employees = new ObservableHashSet<Employee> { ivan, petr }
+            };
+            Save();
 
             Load();
             NewDepartmentCommand = new RelayCommand(x => true, x => Organization.Departments.Add(new Department()));

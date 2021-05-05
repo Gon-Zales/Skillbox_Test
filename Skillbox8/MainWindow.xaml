@@ -8,12 +8,26 @@
                                   x:Key="DepartmentTemplate"
                                   ItemsSource="{Binding Departments}">
             <TreeViewItem Header="{Binding Name}">
-                <StackPanel>
-                    <TextBox Text="{Binding Name}"/>
-                    <TextBlock Text="{Binding Id}"/>
-                    <TextBlock Text="{Binding Employees.Count}"/>
-                    <TextBlock Text="{Binding Created}"/>
-                </StackPanel>
+                <Border BorderBrush="Black" BorderThickness="2">
+                    <StackPanel>
+                        <WrapPanel>
+                            <TextBlock Text="Name: "/>
+                            <TextBox Text="{Binding Name}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="Id: "/>
+                            <TextBlock Text="{Binding Id}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="Name: "/>
+                            <TextBlock Text="{Binding Employees.Count}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="Created: "/>
+                            <TextBlock Text="{Binding Created}"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
             </TreeViewItem>
         </HierarchicalDataTemplate>
     </Window.Resources>
@@ -34,13 +48,25 @@
                 <DataTemplate>
                     <StackPanel>
                         <WrapPanel>
-                            <TextBox Text="{Binding FirstName}"/>
-                            <TextBox Text="{Binding LastName}"/>
+                            <TextBlock Text="Name: "/>
+                            <TextBox Text="{Binding Name}"/>
                         </WrapPanel>
-                        <TextBlock Text="{Binding Id}"/>
-                        <TextBox Text="{Binding DepartmentId}"/>
-                        <TextBox Text="{Binding Age}"/>
-                        <TextBox Text="{Binding Salary}"/>
+                        <WrapPanel>
+                            <TextBlock Text="Id: "/>
+                            <TextBlock Text="{Binding Id}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="DepartmentId: "/>
+                            <TextBox Text="{Binding DepartmentId}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="Age: "/>
+                            <TextBox Text="{Binding Age}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="Salary: "/>
+                            <TextBox Text="{Binding Salary}"/>
+                        </WrapPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
