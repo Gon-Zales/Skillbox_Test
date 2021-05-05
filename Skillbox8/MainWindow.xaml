@@ -19,7 +19,7 @@
                             <TextBlock Text="{Binding Id}"/>
                         </WrapPanel>
                         <WrapPanel>
-                            <TextBlock Text="Name: "/>
+                            <TextBlock Text="Employee count: "/>
                             <TextBlock Text="{Binding Employees.Count}"/>
                         </WrapPanel>
                         <WrapPanel>
@@ -61,7 +61,11 @@
                         </WrapPanel>
                         <WrapPanel>
                             <TextBlock Text="Age: "/>
-                            <TextBox Text="{Binding Age}"/>
+                            <TextBlock Text="{Binding Age}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="Birthday: "/>
+                            <TextBlock Text="{Binding Birthday}" />
                         </WrapPanel>
                         <WrapPanel>
                             <TextBlock Text="Salary: "/>

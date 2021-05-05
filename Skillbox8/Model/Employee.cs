@@ -1,4 +1,5 @@
 ﻿using Skillbox.App.Tools;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,7 +12,8 @@ namespace Skillbox.App.Model
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Age { get; set; }
+        public int Age => DateTime.Today.Year - Birthday.Year;
+        public DateTime Birthday { get; set; }
         public decimal Salary { get; set; }
         public int DepartmentId
         {

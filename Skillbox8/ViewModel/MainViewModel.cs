@@ -26,8 +26,8 @@ namespace Skillbox8.ViewModel
             var dep3 = new Department { Name = "FinDep", Created = DateTime.Now };
             dep3.Departments.Add(dep1);
             dep3.Departments.Add(dep2);
-            var ivan = new Employee { Age = 24, Name = "Ivan Snow", Id = 0, Salary = 1, Department = dep1 };
-            var petr = new Employee { Age = 54, Name = "Petr Snow", Id = 1, Salary = 1, Department = dep2 };
+            var ivan = new Employee { Birthday = new DateTime(1970, 9, 9), Name = "Ivan Snow", Salary = 1543, Department = dep1 };
+            var petr = new Employee { Birthday = new DateTime(1999, 9, 9), Name = "Petr Snow", Salary = 100, Department = dep2 };
             Organization = new Organization
             {
                 Departments = new ObservableHashSet<Department> { dep3 },
@@ -70,7 +70,7 @@ namespace Skillbox8.ViewModel
         private void Load()
         {
 
-            using (var r = new StreamReader(fileName)) //using (var r = new TextWriter(fileName))
+            using (var r = new StreamReader(fileName))
             {
                 string json = r.ReadToEnd();
                 Organization = JsonConvert.DeserializeObject<Organization>(json);
