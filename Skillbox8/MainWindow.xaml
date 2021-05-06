@@ -38,7 +38,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TreeView ItemsSource="{Binding Organization.Departments}"
                   ItemTemplate="{StaticResource ResourceKey=DepartmentTemplate}"/>
@@ -56,8 +56,9 @@
                             <TextBlock Text="{Binding Id}"/>
                         </WrapPanel>
                         <WrapPanel>
-                            <TextBlock Text="DepartmentId: "/>
+                            <TextBlock Text="Department: "/>
                             <TextBox Text="{Binding DepartmentId}"/>
+                            <TextBlock Text="{Binding Department.Name}"/>
                         </WrapPanel>
                         <WrapPanel>
                             <TextBlock Text="Age: "/>

@@ -4,7 +4,6 @@ using Skillbox.App.ViewModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 
 namespace Skillbox.App.Tools
 {
@@ -32,7 +31,7 @@ namespace Skillbox.App.Tools
             if (!AllDepartmentVMs.ContainsKey(id))
             {
                 Department model = AllEntities.Departments.Single(x => x.Id == id);
-                Organization.Departments.Add(new DepartmentVM(model));
+                Organization.AddDepartment(new DepartmentVM(model));
             }
             return AllDepartmentVMs[id];
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using Skillbox.App.Model;
@@ -17,7 +16,7 @@ namespace Skillbox.App.ViewModel
 
         public MainViewModel()
         {
-            CreateMockOrg();
+            //CreateMockOrg();
 
             EntityManager.Load();
             OnPropertyChanged(nameof(Organization));
@@ -29,7 +28,7 @@ namespace Skillbox.App.ViewModel
 
         private void CreateDepartment()
         {
-            Organization.Departments.Add(new DepartmentVM(new Department()));
+            Organization.AddDepartment(new DepartmentVM(new Department()));
         }
 
         private void CreateEmployee()
@@ -48,7 +47,7 @@ namespace Skillbox.App.ViewModel
             var petr = new Employee { Birthday = new DateTime(1999, 9, 9), Name = "Petr Snow", Salary = 100, DepartmentId = dep2.Id };
             dep1.Employees.Add(ivan.Id);
             dep2.Employees.Add(petr.Id);
-            Organization.Departments.Add(new DepartmentVM(dep3));
+            Organization.AddDepartment(new DepartmentVM(dep3));
             EntityManager.Save();
         }
 

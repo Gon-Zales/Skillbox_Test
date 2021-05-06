@@ -14,6 +14,11 @@ namespace Skillbox.App.ViewModel
         public int Age => DateTime.Today.Year - Birthday.Year;
         public DateTime Birthday { get; set; }
         public decimal Salary { get; set; }
+        public int DepartmentId
+        {
+            get => department.Id;
+            set => Department = EntityManager.GetDepartmentVM(value);
+        }
         public DepartmentVM Department
         {
             get => department;
@@ -36,7 +41,7 @@ namespace Skillbox.App.ViewModel
             Birthday = model.Birthday;
             Salary = model.Salary;
             EntityManager.AllEmployeeVMs[Id] = this;
-            Department = EntityManager.GetDepartmentVM(model.DepartmentId);
+            DepartmentId = model.DepartmentId;
             Debug.WriteLine($"Employee '{Name}' is created {Id}");
         }
     }
