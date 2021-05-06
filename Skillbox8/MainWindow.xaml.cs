@@ -1,7 +1,7 @@
-﻿using Skillbox8.ViewModel;
+﻿using Skillbox.App.ViewModel;
 using System.Windows;
 
-namespace Skillbox_8
+namespace Skillbox.App
 {
     public partial class MainWindow : Window
     {

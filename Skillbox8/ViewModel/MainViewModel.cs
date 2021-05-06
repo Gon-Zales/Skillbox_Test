@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using Skillbox.App.Model;
 using Skillbox.App.Tools;
 
-namespace Skillbox8.ViewModel
+namespace Skillbox.App.ViewModel
 {
     class MainViewModel
     {
