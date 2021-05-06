@@ -10,8 +10,8 @@ namespace Skillbox.App.Model
         public int Id { get; set; } = EntityManager.Count;
         public string Name { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
-        public ISet<int> Employees { get; } = new HashSet<int>();
-        public ISet<int> Departments { get; } = new HashSet<int>();
+        public ISet<int> Employees { get; set; } = new HashSet<int>();
+        public ISet<int> Departments { get; set; } = new HashSet<int>();
 
         public Department()
         {

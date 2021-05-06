@@ -54,6 +54,14 @@ namespace Skillbox.App.Tools
 
         public static void Save()
         {
+            foreach (var employee in AllEmployeeVMs.Values)
+            {
+                employee.Save();
+            }
+            foreach (var department in AllDepartmentVMs.Values)
+            {
+                department.Save();
+            }
             using (var stream = File.CreateText(fileName))
             {
                 string json = JsonConvert.SerializeObject(AllEntities);

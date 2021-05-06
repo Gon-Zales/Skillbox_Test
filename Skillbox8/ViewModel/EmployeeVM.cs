@@ -8,6 +8,7 @@ namespace Skillbox.App.ViewModel
     public class EmployeeVM : Observable, IEntity
     {
         private DepartmentVM department;
+        private readonly Employee model;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -36,6 +37,7 @@ namespace Skillbox.App.ViewModel
 
         public EmployeeVM(Employee model)
         {
+            this.model = model;
             Id = model.Id;
             Name = model.Name;
             Birthday = model.Birthday;
@@ -43,6 +45,14 @@ namespace Skillbox.App.ViewModel
             EntityManager.AllEmployeeVMs[Id] = this;
             DepartmentId = model.DepartmentId;
             Debug.WriteLine($"Employee '{Name}' is created {Id}");
+        }
+        public void Save()
+        {
+            model.Id = Id;
+            model.Name = Name;
+            model.Birthday = Birthday;
+            model.Salary = Salary;
+            model.DepartmentId = DepartmentId;
         }
 
         public override bool Equals(object obj)
