@@ -44,5 +44,14 @@ namespace Skillbox.App.ViewModel
             DepartmentId = model.DepartmentId;
             Debug.WriteLine($"Employee '{Name}' is created {Id}");
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is EmployeeVM vM && Id == vM.Id;
+        }
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

@@ -1,14 +1,14 @@
-﻿using Skillbox.App.Tools;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Skillbox.App.Tools;
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Skillbox.App.ViewModel
 {
     public class OrganizationVM : Observable
     {
-        public ObservableCollection<DepartmentVM> Departments { get; } = new ObservableCollection<DepartmentVM>();
-        public ObservableCollection<EmployeeVM> Employees { get; } = new ObservableCollection<EmployeeVM>();
+        public ObservableHashSet<DepartmentVM> Departments { get; } = new ObservableHashSet<DepartmentVM>();
+        public ObservableHashSet<EmployeeVM> Employees { get; } = new ObservableHashSet<EmployeeVM>();
 
         internal void AddDepartment(DepartmentVM departmentVM)
         {
