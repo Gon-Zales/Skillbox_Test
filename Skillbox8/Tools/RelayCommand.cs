@@ -8,11 +8,13 @@ namespace Skillbox.App.Tools
         private readonly Predicate<object> _canExecute;
         private readonly Action<object> _execute;
 
+        public RelayCommand(Action execute) : this(x => true, x => execute()) { }
         public RelayCommand(Predicate<object> canExecute, Action<object> execute)
         {
             _canExecute = canExecute;
             _execute = execute;
         }
+
 
         public event EventHandler CanExecuteChanged
         {

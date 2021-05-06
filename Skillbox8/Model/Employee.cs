@@ -1,45 +1,22 @@
 ﻿using Skillbox.App.Tools;
 using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Serialization;
 
 namespace Skillbox.App.Model
 {
-    public class Employee : Observable
+    public class Employee : IEntity
     {
-        private Department department;
-
-        public int Id { get; set; }
+        public int Id { get; set; } = EntityManager.Count;
         public string Name { get; set; }
         public int Age => DateTime.Today.Year - Birthday.Year;
         public DateTime Birthday { get; set; }
         public decimal Salary { get; set; }
-        public int DepartmentId
-        {
-            get => department?.Id ?? 0;
-            set
-            {
-                Debug.WriteLine($"Employee {Id}.DepartmentId is assigned {value}");
-                Department = Department.AllDepartments.Single(x => x.Key == value).Value;
-            }
-        }
+        public int DepartmentId { get; set; }
 
-        [IgnoreDataMember]
-        public Department Department
+        public Employee()
         {
-            get => department;
-            set
-            {
-                if (department == value)
-                    return;
-                Debug.WriteLine($"Employee {Id}.Department is assigned {value.Id}");
-                department?.Employees.Remove(this);
-                department = value;
-                department.Employees.Add(this);
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(DepartmentId));
-            }
+            Debug.WriteLine($"Employee '{Name}' is created {Id}");
+            EntityManager.AllEntities.Employees.Add(this);
         }
     }
 }

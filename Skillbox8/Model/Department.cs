@@ -1,35 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Skillbox.App.Tools;
+﻿using Skillbox.App.Tools;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Diagnostics;
 
 namespace Skillbox.App.Model
 {
-    public class Department : Observable
+    public class Department : Observable, IEntity
     {
-        private readonly ObservableHashSet<Employee> employees = new ObservableHashSet<Employee>();
-        public static Dictionary<int, Department> AllDepartments = new Dictionary<int, Department>();
-
-        public int Id { get; internal set; } = AllDepartments.Count;
+        public int Id { get; set; } = EntityManager.Count;
         public string Name { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
-        [IgnoreDataMember]
-        public ISet<Employee> Employees { get => employees; }
-        public ISet<int> EmployeeIDs => new HashSet<int>(employees.Select(x => x.Id));
-        public ISet<Department> Departments { get; } = new HashSet<Department>();
+        public ISet<int> Employees { get; } = new HashSet<int>();
+        public ISet<int> Departments { get; } = new HashSet<int>();
 
         public Department()
         {
-            employees.CollectionChanged += Employees_CollectionChanged;
-            AllDepartments[Id] = this;
-        }
-        private void Employees_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(Employees));
-            OnPropertyChanged(nameof(EmployeeIDs));
+            Debug.WriteLine($"Department '{Name}' is created {Id}");
+            EntityManager.AllEntities.Departments.Add(this);
         }
     }
 }

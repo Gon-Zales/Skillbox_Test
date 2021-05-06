@@ -133,9 +133,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DataBase.cs" />
     <Compile Include="Tools\Observable.cs" />
     <Compile Include="Tools\RelayCommand.cs" />
+    <Compile Include="ViewModel\DepartmentVM.cs" />
+    <Compile Include="ViewModel\EmployeeVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\OrganizationVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -150,9 +154,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\IEntity.cs" />
+    <Compile Include="Tools\EntityManager.cs" />
     <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Employee.cs" />
-    <Compile Include="Model\Organization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
