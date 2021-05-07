@@ -18,11 +18,15 @@ namespace Skillbox.App.Tools
             switch (jObject["Type"].ToObject<PaymentType>())
             {
                 case PaymentType.Contract:
-                    return serializer.Deserialize<InternPayment>(reader);
+                    return new InternPayment { Salary = jObject["Salary"].ToObject<int>() };
                 case PaymentType.Percentage:
-                    return serializer.Deserialize<ManagerPayment>(reader);
+                    return new ManagerPayment();
                 case PaymentType.PerHour:
-                    return serializer.Deserialize<WorkerPayment>(reader);
+                    return new WorkerPayment
+                    {
+                        HoursLastMonth = jObject["HoursLastMonth"].ToObject<decimal>(),
+                        PayRate = jObject["PayRate"].ToObject<decimal>()
+                    };
                 default:
                     throw new ArgumentOutOfRangeException("Invalid PaymentType value");
             }

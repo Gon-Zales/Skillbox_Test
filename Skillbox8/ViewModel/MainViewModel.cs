@@ -16,7 +16,7 @@ namespace Skillbox.App.ViewModel
 
         public MainViewModel()
         {
-            //CreateMockOrg();
+            CreateMockOrg();
 
             EntityManager.Load();
             OnPropertyChanged(nameof(Organization));
@@ -43,10 +43,15 @@ namespace Skillbox.App.ViewModel
             var dep3 = new Department { Name = "FinDep", Created = DateTime.Now };
             dep3.Departments.Add(dep1.Id);
             dep3.Departments.Add(dep2.Id);
-            var ivan = new Employee { Birthday = new DateTime(1970, 9, 9), Name = "Ivan Snow", Salary = 1543, DepartmentId = dep1.Id };
-            var petr = new Employee { Birthday = new DateTime(1999, 9, 9), Name = "Petr Snow", Salary = 100, DepartmentId = dep2.Id };
+            var pd1 = new InternPayment { Salary = 600M };
+            var pd2 = new WorkerPayment { HoursLastMonth = 250M, PayRate = 400M };
+            var pd3 = new ManagerPayment();
+            var ivan = new Employee { Birthday = new DateTime(1970, 9, 9), Name = "Ivan Snow", PaymentData= pd1, DepartmentId = dep1.Id };
+            var petr = new Employee { Birthday = new DateTime(1999, 9, 9), Name = "Petr Snow", PaymentData = pd2, DepartmentId = dep2.Id };
+            var max = new Employee { Birthday = new DateTime(1999, 9, 9), Name = "Max Snow", PaymentData= pd3, DepartmentId = dep3.Id };
             dep1.Employees.Add(ivan.Id);
             dep2.Employees.Add(petr.Id);
+            dep3.Employees.Add(max.Id);
             Organization.AddDepartment(new DepartmentVM(dep3));
             EntityManager.Save();
         }

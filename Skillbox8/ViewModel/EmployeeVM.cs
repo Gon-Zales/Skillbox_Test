@@ -20,6 +20,8 @@ namespace Skillbox.App.ViewModel
             get => department.Id;
             set => Department = EntityManager.GetDepartmentVM(value);
         }
+        public string Position { get; set; }
+        public IPaymentData PaymentData { get; set; }
         public DepartmentVM Department
         {
             get => department;
@@ -41,7 +43,7 @@ namespace Skillbox.App.ViewModel
             Id = model.Id;
             Name = model.Name;
             Birthday = model.Birthday;
-            Salary = model.Salary;
+            PaymentData = model.PaymentData;
             EntityManager.AllEmployeeVMs[Id] = this;
             DepartmentId = model.DepartmentId;
             Debug.WriteLine($"Employee '{Name}' is created {Id}");
@@ -51,7 +53,7 @@ namespace Skillbox.App.ViewModel
             model.Id = Id;
             model.Name = Name;
             model.Birthday = Birthday;
-            model.Salary = Salary;
+            model.PaymentData = PaymentData;
             model.DepartmentId = DepartmentId;
         }
 
