@@ -72,6 +72,10 @@
                             <TextBlock Text="Position: "/>
                             <TextBlock Text="{Binding Position}" />
                         </WrapPanel>
+                        <WrapPanel>
+                            <TextBlock Text="Subrdinates count: "/>
+                            <TextBlock Text="{Binding Subordinates.Count}" />
+                        </WrapPanel>
                         <StackPanel Margin="10,0,0,0">
                             <WrapPanel>
                                 <TextBlock Text="Payment Type: "/>

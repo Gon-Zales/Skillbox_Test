@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Skillbox.App.Tools;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Skillbox.App.Model
@@ -15,6 +16,7 @@ namespace Skillbox.App.Model
         public string Position { get; set; }
         [JsonConverter(typeof(PaymentTypeConverter))]
         public IPaymentData PaymentData { get; set; }
+        public ISet<int> Subordinates { get; set; } = new HashSet<int>();
         public Employee()
         {
             Debug.WriteLine($"Employee '{Name}' is created {Id}");

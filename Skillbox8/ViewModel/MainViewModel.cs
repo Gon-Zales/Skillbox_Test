@@ -52,6 +52,8 @@ namespace Skillbox.App.ViewModel
             dep1.Employees.Add(ivan.Id);
             dep2.Employees.Add(petr.Id);
             dep3.Employees.Add(max.Id);
+            max.Subordinates.Add(ivan.Id);
+            max.Subordinates.Add(petr.Id);
             Organization.AddDepartment(new DepartmentVM(dep3));
             EntityManager.Save();
         }
