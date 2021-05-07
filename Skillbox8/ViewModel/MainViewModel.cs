@@ -33,7 +33,7 @@ namespace Skillbox.App.ViewModel
 
         private void CreateEmployee()
         {
-            Organization.Employees.Add(new EmployeeVM(new Employee()));
+            Organization.Employees.Add(EmployeeVM.CreateEmployee(new Employee()));
         }
 
         private void CreateMockOrg()

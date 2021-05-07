@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Skillbox.App.Model
 {
@@ -29,6 +30,7 @@ namespace Skillbox.App.Model
     public class ManagerPayment : IPaymentData
     {
         public const decimal ManagersMinSalary = 1300M;
+        [IgnoreDataMember]
         public Func<decimal> SumSubordinatesSal = () => 0M;
         public decimal TotalCompensation => Salary;
         public PaymentType Type => PaymentType.Percentage;

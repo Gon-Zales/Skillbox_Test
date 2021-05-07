@@ -22,7 +22,7 @@ namespace Skillbox.App.Tools
             if (!AllEmployeeVMs.ContainsKey(id))
             {
                 Employee model = AllEntities.Employees.Single(x => x.Id == id);
-                Organization.Employees.Add(new EmployeeVM(model));
+                Organization.Employees.Add(EmployeeVM.CreateEmployee(model));
             }
             return AllEmployeeVMs[id];
         }

@@ -61,6 +61,11 @@
                             <TextBlock Text="{Binding Department.Name}"/>
                         </WrapPanel>
                         <WrapPanel>
+                            <TextBlock Text="Boss: "/>
+                            <TextBox Text="{Binding BossId}"/>
+                            <TextBlock Text="{Binding Boss.Name}"/>
+                        </WrapPanel>
+                        <WrapPanel>
                             <TextBlock Text="Age: "/>
                             <TextBlock Text="{Binding Age}"/>
                         </WrapPanel>

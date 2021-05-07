@@ -141,6 +141,7 @@
     <Compile Include="ViewModel\DepartmentVM.cs" />
     <Compile Include="ViewModel\EmployeeVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ManagerVM.cs" />
     <Compile Include="ViewModel\OrganizationVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
